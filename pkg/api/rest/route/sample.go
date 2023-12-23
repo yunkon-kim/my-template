@@ -2,8 +2,9 @@ package route
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/yunkon-kim/my-template/api/rest/controller"
+	"github.com/yunkon-kim/my-template/pkg/api/rest/controller"
 )
+
 
 // /my-template/sample/*
 func RegisterSampleRoutes(g *echo.Group) {

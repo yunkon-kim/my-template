@@ -9,7 +9,8 @@ import (
 	"time"
 
 	"github.com/spf13/viper"
-	"github.com/yunkon-kim/my-template/api/rest/route"
+	"github.com/yunkon-kim/my-template/pkg/api/rest/controller"
+	"github.com/yunkon-kim/my-template/pkg/api/rest/route"
 
 	"crypto/subtle"
 	"fmt"
@@ -185,24 +186,13 @@ func RunServer(port string) {
 	// Route for system management
 	e.GET("/my-template/swagger/*", echoSwagger.WrapHandler)
 
-	// e.GET("/my-template/swaggerActive", rest_common.RestGetSwagger)
-	e.GET("/my-template/health", rest_common.RestGetHealth)
-	e.GET("/my-template/httpVersion", rest_common.RestCheckHTTPVersion)
-
 	// my-template API group which has /my-template as prefix
 	groupBase := e.Group("/my-template")
+	groupBase.GET("/health", controller.RestGetHealth)
 
 	// Sample API group (for developers to add new API)
 	groupSample := groupBase.Group("/sample")
 	route.RegisterSampleRoutes(groupSample)
-
-	// Recommendation API group
-	groupRecommendation := groupBase.Group("/recommendation")
-	route.RegisterRecommendationRoutes(groupRecommendation)
-
-	// Migration API group
-	groupMigration := groupBase.Group("/migration")
-	route.RegisterMigrationRoutes(groupMigration)
 
 	selfEndpoint := viper.GetString("self.endpoint")
 	apidashboard := " http://" + selfEndpoint + "/my-template/swagger/index.html"

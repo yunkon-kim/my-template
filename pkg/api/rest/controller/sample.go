@@ -8,6 +8,26 @@ import (
 	"github.com/yunkon-kim/my-template/pkg/api/rest/model"
 )
 
+// RestGetHealth func is for checking Beetle server health.
+// RestGetHealth godoc
+// @Summary Check Beetle is alive
+// @Description Check Beetle is alive
+// @Tags [Admin] System management
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} model.BasicResponse
+// @Failure 404 {object} model.BasicResponse
+// @Failure 500 {object} model.BasicResponse
+// @Router /health [get]
+func RestGetHealth(c echo.Context) error {
+	okMessage := model.BasicResponse{
+		Result: "my-template API server is running",
+		Error:  nil,
+	}
+
+	return c.JSON(http.StatusOK, &okMessage)
+}
+
 // [Note]
 // No RequestBody required for "GET /users"
 
